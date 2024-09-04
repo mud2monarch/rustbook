@@ -20,5 +20,13 @@ fn main() {
         break;
     }
 
+    let parts: Vec<&str> = input.split_whitespace().collect();
+
+    let num1 = parts[0].parse::<i32>();
+    let op = parts[1].parse::<char>();
+    let num2 = parts[2].parse::<char>();
+
+    // now check
+
     println!("Valid input! It was: {}", input);
 }
