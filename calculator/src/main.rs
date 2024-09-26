@@ -5,7 +5,7 @@ fn main() {
     
     let mut input = String::new();
 
-    loop {``
+    loop {
         input.clear();
         println!("Please input your equation as two integers and one operator.");
 
