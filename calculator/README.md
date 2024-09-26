@@ -7,10 +7,10 @@ Create a command-line calculator that takes in basic arithmetic expressions as i
 - [x] Create a new Cargo project using `cargo new calculator`.
 - [x] Define an enum to represent the different operations (e.g., Add, Subtract, Multiply, Divide).
 - [x] Take in user input. 
-- [ ] Write a function to parse the user input (a string) into an operation and two operands (numbers).
-4. Implement the logic to perform the operation based on the enum value.
-5. Handle errors for invalid input, division by zero, etc.
-6. Use Cargo to build and run the program.
+- [x] Write a function to parse the user input (a string) into an operation and two operands (numbers).
+- [ ] Implement the logic to perform the operation based on the enum value.
+- [ ] Handle errors for invalid input, division by zero, etc.
+- [ ] Use Cargo to build and run the program.
 
 ## Additional Features
 
