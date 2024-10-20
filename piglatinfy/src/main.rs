@@ -6,30 +6,35 @@ fn main() {
     let mut input = String::new();
     io::stdin().read_line(&mut input).expect("reading of input errored.");
 
-    let parts: Vec<&str> = input.split_whitespace().collect();
-    let mut output: Vec<&str> = Vec::new();
+    let parts: Vec<String> = input.split_whitespace().map(String::from).collect();
+    let mut output: Vec<String> = Vec::new();
 
-    for word in &parts {
-        if is_alphabetic(word) {
-            match pig_latinfy(word) {
-                Some(pig_word) => output.push(pig_word),
-                None => panic!("Unexpected empty word in pig_latinfy: {}", word),
+    //@dev reimplement this
+    for p in &parts {
+        let (word_part, punct_part) = split_words_from_punctuation(p);
+
+        if !word_part.is_empty() {
+            match pig_latinfy(&word_part) {
+                Some(mut pig_word) => {
+                    pig_word.push_str(&punct_part);
+                    output.push(pig_word);
+                },
+                None => panic!("Unexpected empty word in pig_latinfy: {}", p),
             }
-        }
-        // @dev TODO: next up
-    }
-}
-
-fn is_alphabetic (s: &str) -> bool {
-    for c in s.chars() {
-        if !c.is_ascii_alphabetic() {
-            return false;
+        } else if !punct_part.is_empty() {
+            output.push(punct_part);
         }
     }
-    return true;
+
+    println!("in-ay igPay atinLay isthay entencesay is-ay: {}", output.join(" "));
 }
 
-// note: usage should check if the full input is_ascii_alphabetic() prior to passing to this function.
+fn split_words_from_punctuation(part: &str) -> (String, String) {
+    let word_part: String = part.chars().take_while(|c| c.is_ascii_alphabetic()).collect();
+    let punct_part: String = part.chars().skip(word_part.len()).collect();
+    (word_part, punct_part)
+}
+
 fn pig_latinfy(word: &str) -> Option<String> {
     let mut chars: Vec<char> = word.chars().collect();
 
@@ -41,7 +46,7 @@ fn pig_latinfy(word: &str) -> Option<String> {
     
     // If it starts with a vowel, just add "ay"
     if matches!(first_char, 'a' | 'e' | 'i' | 'o' | 'u') {
-        chars.extend(['a', 'y']);
+        chars.extend(['-', 'a', 'y']);
     }
     // because I check if it's is_ascii_alphabetic() before, I can move straight to an else
     else {
